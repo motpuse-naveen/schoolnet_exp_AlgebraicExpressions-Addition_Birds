@@ -211,7 +211,7 @@
     width: 60% !important;
     font-size: 13px !important;
     padding: 8px 5px !important;
-    height: 77px !important;
+    /*height: 77px !important;*/
   }
   .qtn_txt {
     font-size: 18px !important;
@@ -219,7 +219,7 @@
   .ans_content {
     width: 40% !important;
     padding: 20px 5px !important;
-    height: 77px !important;
+    /*height: 77px !important;*/
   }
   .numbInput_label {
     font-size: 18px !important;
@@ -334,7 +334,7 @@
     margin: 0em 0.5em;
   }
 }
-@media screen and (orientation: portrait) and (max-device-width: 660px) {
+@media screen and (orientation: portrait) and (max-device-width: 610px) {
   /*BOB Style*/
 
   /*END BOB Style*/
@@ -353,9 +353,16 @@
     width: 64px;
     margin: 0em 0.5em;
   }
+  .container-so.main .exp_header .header .main-src-logo {
+    width: 68px;
+    margin: 0.4em;
+}
   .birdsExplain{
     font-size: 12px;
   }
+  .activity-page-expl-logo{
+    padding: 13px 10px 13px 16px;
+}
 }
 
 @media only screen and (min-width: 990px) {

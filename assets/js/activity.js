@@ -24,18 +24,30 @@ var birdPluralArray = [
   "swans",
   "woodpeckers",
 ];
+var birdHtml = {
+  "eagleSet_mc":`<div id="eagleSet_mc" class="birds_set_mc"><div class="eaglePix_sym"> </div></div>`,
+  "hornbillSet_mc":`<div id="hornbillSet_mc" class="birds_set_mc" ><div class="hornbillPix_sym"> </div></div>`,
+  "owlSet_mc":`<div id="owlSet_mc" class="birds_set_mc"><div class="owlPix_sym"> </div></div>`,
+  "parrotSet_mc":`<div id="parrotSet_mc" class="birds_set_mc"><div class="parrotPix_sym"> </div></div>`,
+  "pelicanSet_mc":`<div id="pelicanSet_mc" class="birds_set_mc" ><div class="pelicanPix_sym"> </div></div>`,
+  "woodpeckerSet_mc":`<div id="woodpeckerSet_mc" class="birds_set_mc" ><div class="woodpeckerPix_sym"> </div></div>`,
+  "swanSet_mc":`<div id="swanSet_mc" class="birds_set_mc" ><div class="swanPix_sym"> </div></div>`,
+  "sparrowSet_mc":`<div id="sparrowSet_mc" class="birds_set_mc" ><div class="sparrowPix_sym"> </div></div>`,
+  "robinSet_mc":`<div id="robinSet_mc" class="birds_set_mc" ><div class="robinPix_sym"> </div></div>`,
+  "pigeonSet_mc":`<div id="pigeonSet_mc" class="birds_set_mc"><div class="pigeonPix_sym"> </div></div>`
+}
 var birdVarNameArray = ["a", "b", "c", "d", "e", "x", "y", "z", "n", "m"];
 var mStr = "";
 var birdCountArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 var birdOrderArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 var exprOrderArray = [0, 1, 2, 3, 4];
-var screenMCXArray = new Array(5);
-var screenMCYArray = new Array(5);
+//var screenMCXArray = new Array(5);
+//var screenMCYArray = new Array(5);
 var screenTextArray = new Array(5);
 
 for (var i = 0; i <= 4; i++) {
-  screenMCXArray[i] = $("#set_mc").find("#" + birdNameArray[i] + "Set_mc").css("left");
-  screenMCYArray[i] = $("#set_mc").find("#" + birdNameArray[i] + "Set_mc").css("top");
+  //screenMCXArray[i] = $("#set_mc").find("#" + birdNameArray[i] + "Set_mc").css("left");
+  //screenMCYArray[i] = $("#set_mc").find("#" + birdNameArray[i] + "Set_mc").css("top");
   screenTextArray[i] = $("#set_mc").find("#bird" + (i + 1) + "_set_mc_txt");
 }
 
@@ -60,7 +72,7 @@ var valueOfExpr = 0;
 var EvaluateAlgebraicExpressions = (function () {
   return {
     LaunchActivity: function () {
-
+      //nm
       for (var i = 0; i < birdNameArray.length; i++) {
         initSet($("#set_mc").find("#" + birdNameArray[i] + "Set_mc"), birdNameArray[i] + "Pix_sym");
       }
@@ -164,18 +176,18 @@ function newQuestion() {
 
   for (var j = 0; j < birdNameArray.length; j++) {
     birdCountArray[j] = parseInt(Math.random() * (tenFactor - 1)) + 1;
-    $("#set_mc").find("#" + birdNameArray[j] + "Set_mc").hide();
-    $("#set_mc").find("#" + birdNameArray[j] + "Set_mc").css({ left: 0, top: 0 });
+    //$("#set_mc").find("#" + birdNameArray[j] + "Set_mc").hide();
+    //$("#set_mc").find("#" + birdNameArray[j] + "Set_mc").css({ left: 0, top: 0 });
   }
 
   shuffle(birdOrderArray);
 
   for (var k = 0; k <= 4; k++) {
-    // showSet($("#set_mc").find("#"+birdNameArray[birdOrderArray[k]] + "Set_mc"), birdCountArray[birdOrderArray[k]]);
-    $("#set_mc").find("#" + birdNameArray[birdOrderArray[k]] + "Set_mc").show();
-    // $("#set_mc").find("#"+birdNameArray[birdOrderArray[k]] + "Set_mc").css({left: screenMCXArray[k], top: screenMCYArray[k]});
-    $("#set_mc").find("#" + birdNameArray[birdOrderArray[k]] + "Set_mc").css({ left: Math.round($(screenTextArray[k]).position().left) - 20, top: Math.round($(screenTextArray[k]).position().top) + 8 });
-    $(screenTextArray[k]).text("" + birdVarNameArray[birdOrderArray[k]] + " = " + "No. of " + birdPluralArray[birdOrderArray[k]] + " = " + birdCountArray[birdOrderArray[k]]);
+    //$("#set_mc").find("#" + birdNameArray[birdOrderArray[k]] + "Set_mc").show();
+    //$("#set_mc").find("#" + birdNameArray[birdOrderArray[k]] + "Set_mc").css({ left: Math.round($(screenTextArray[k]).position().left) - 20, top: Math.round($(screenTextArray[k]).position().top) + 8 });
+    $(screenTextArray[k]).find(".birds_set_mc").remove();
+    $(screenTextArray[k]).prepend(birdHtml[birdNameArray[birdOrderArray[k]] + "Set_mc"])
+    $(screenTextArray[k]).find(".expr-text").html("<i>" + birdVarNameArray[birdOrderArray[k]] + "</i> = " + "No. of " + birdPluralArray[birdOrderArray[k]] + " = " + birdCountArray[birdOrderArray[k]]);
   }
 
   shuffle(exprOrderArray);
@@ -388,12 +400,12 @@ $("#explain_btn").on("click", function () {
     $("#explain_mc").find("#" + birdNameArray[birdOrderArray[k]] + "Explain_mc").show();
     // $("#explain_mc").find("#"+birdNameArray[birdOrderArray[k]] + "Explain_mc").css({left: explainMCXArray[k], top: explainMCYArray[k]});   
     $("#explain_mc").find("#" + birdNameArray[birdOrderArray[k]] + "Explain_mc").css({ left: Math.round($(explainTextArray[k]).position().left) + 30, top: Math.round($(explainTextArray[k]).position().top) });
-    $(explainTextArray[k]).text("" + birdVarNameArray[birdOrderArray[k]] + " = " + "Number of " + birdPluralArray[birdOrderArray[k]] + " = " + birdCountArray[birdOrderArray[k]]);
+    $(explainTextArray[k]).html("<i>" + birdVarNameArray[birdOrderArray[k]] + "</i> = " + "Number of " + birdPluralArray[birdOrderArray[k]] + " = " + birdCountArray[birdOrderArray[k]]);
 
     var col = $(".Explain_mc_birdrow").find(".bird"+ (k+1))
     col.empty();
     col.append($("#explain_mc").find("#" + birdNameArray[birdOrderArray[k]] + "Explain_mc").clone().removeAttr("id").removeAttr("style"))
-    col.append($("<p class='bold birdtext'>").text("" + birdVarNameArray[birdOrderArray[k]] + " = " + "Number of " + birdPluralArray[birdOrderArray[k]] + " = " + birdCountArray[birdOrderArray[k]]));
+    col.append($("<p class='bold birdtext'>").html("<i>" + birdVarNameArray[birdOrderArray[k]] + "</i> = " + "Number of " + birdPluralArray[birdOrderArray[k]] + " = " + birdCountArray[birdOrderArray[k]]));
   }
 
   for (var j = 0; j <= 4; j++) {
@@ -420,6 +432,7 @@ $("#explain_btn").on("click", function () {
   }
 
   $("#explain_mc #answer_txt").text(valueOfExpr);
+  $("#OK_btn, #btn_reset, #explain_btn, #next_btn, #btn_info").attr("disabled","disabled");
 });
 
 $("#explain_mc #closeIcon_mc").on("click", function () {

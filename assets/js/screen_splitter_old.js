@@ -25,33 +25,21 @@ var ScreenSplitter = (function () {
     </div>`;
 
     return {
-        InitSplitter: function (whenresize) {
+        InitSplitter: function () {
             $("#split-main").removeClass("v-split-main").removeClass("h-split-main");
             $("#split-main").removeAttr("style")
-            if(whenresize!=undefined && whenresize!=null && whenresize==true){
-                if(window.screen.availWidth<730){
-                    $("#split-main").addClass("v-split-main");
-                    this.VerticalSplit();
-                }
-                else{
-                    $("#split-main").addClass("h-split-main");
-                    this.HorizontalSplit();
-                }
+            if (window.matchMedia("(orientation: portrait)").matches) {
+                $("#split-main").addClass("v-split-main");
+                this.VerticalSplit();
             }
-            else{
-                if (window.matchMedia("(orientation: portrait)").matches) {
-                    $("#split-main").addClass("v-split-main");
-                    this.VerticalSplit();
-                }
-                else {
-                    $("#split-main").addClass("h-split-main");
-                    this.HorizontalSplit();
-                }
+            else {
+                $("#split-main").addClass("h-split-main");
+                this.HorizontalSplit();
             }
             //NM: Specific to SpringOscillation.
             var sprcontht = $(".spingContainer").height();
-            //$(".spingContainer").css({"height":sprcontht + "px"})
-            $(".springCanvas").css({"height":sprcontht + "px"})
+            $(".spingContainer").css({"height":sprcontht + "px"});
+            $(".gutter").css("pointer-events", "none");
         },
         HorizontalSplit: function () {
             $(".gutter").remove();
@@ -63,12 +51,12 @@ var ScreenSplitter = (function () {
                 gutterSize: 1,
                 onDrag: function (sizes) {
                     /* Scale Spring to fit */
-                    //ScreenSplitter.ScaleToFit($("#split-0"))
+                    ScreenSplitter.ScaleToFit($("#split-0"));
                     /* Scale Graph to fit */
-                    ScreenSplitter.ScaleToFit($("#split-1"))
+                    ScreenSplitter.ScaleToFit($("#split-1"));
                 },
-            })
-            $(".gutter").append(horizontalHandle)
+            });
+            // $(".gutter").append(horizontalHandle);
         },
         VerticalSplit: function () {
             $(".gutter").remove();
@@ -80,16 +68,16 @@ var ScreenSplitter = (function () {
                 gutterSize: 1,
                 onDrag: function (sizes) {
                     /* Scale Spring to fit */
-                    ScreenSplitter.ScaleToFit($("#split-0"))
+                    ScreenSplitter.ScaleToFit($("#split-0"));
                     /* Scale Graph to fit */
-                    ScreenSplitter.ScaleToFit($("#split-1"))
+                    ScreenSplitter.ScaleToFit($("#split-1"));
                 },
-            })
-            $(".gutter").append(verticalHandle)
+            });
+            // $(".gutter").append(verticalHandle);
         },
         ScaleToFit: function ($wrapper,$element, deltaWidth, deltaHeight) {
             if($element==null || $element == undefined){
-                $element = $wrapper.find(".content-container")
+                $element = $wrapper.find(".content-container");
             }
             if(deltaWidth==null || deltaWidth == undefined){
                 deltaWidth = 0;
@@ -105,20 +93,17 @@ var ScreenSplitter = (function () {
             var elmSize = {
                 width: $element.outerWidth() + deltaWidth,
                 height: $element.outerHeight() + deltaHeight
-            }
+            };
             var scale;
             var wrapperSize = {
                 width: $wrapper.width(),
                 height: $wrapper.height()
-            }
+            };
             scale = Math.min(
                 wrapperSize.width/elmSize.width,
                 wrapperSize.height/elmSize.height
             );
-            $element.css({
-                transform: "scale(" + scale + ")"
-            });
-            /*if (scale < 1) {
+            if (scale < 1) {
                 $element.css({
                     transform: "scale(" + scale + ")"
                 });
@@ -128,13 +113,8 @@ var ScreenSplitter = (function () {
                 $element.css({
                     "transform": "scale(" + scale + ")"
                 });
-            }*/
-            $element.addClass("split-scaled").attr("scale",scale);
-        },
-        ResetSplit: function(){
-            $(".split-scaled").removeAttr("scale").removeAttr("style").removeClass("split-scaled");
-            this.InitSplitter();
-            ScreenSplitter.ScaleToFit($("#split-1"))
+            }
+            $element.attr("scale",scale);
         }
-    }
+    };
 })();
