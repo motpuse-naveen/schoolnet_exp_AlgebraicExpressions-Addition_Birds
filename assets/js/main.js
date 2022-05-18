@@ -291,7 +291,7 @@ $(document).on("click", ".btn-close-popup", function (event) {
 
 });
 $(document).on("click", ".btn-close-explain-popup", function (event) {
-  $(this).closest(".popup").hide();
+  $(this).closest(".popup_mc").hide();
   //$(".active").removeClass("active")
   //ActivityShell.AdjustSplitPanelsOnClosePopup($(this).closest(".popup"));
   /* Scale Spring to fit */

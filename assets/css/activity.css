@@ -703,7 +703,7 @@ input[type="number"] {
   top: 0px;
   left: 0px;
   margin-bottom: 48px;*/
-  z-index: 20;
+  z-index: 8;
 }
 
 .popup_inst .eaglePix {
