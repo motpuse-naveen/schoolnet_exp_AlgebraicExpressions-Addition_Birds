@@ -63,9 +63,9 @@ var ScreenSplitter = (function () {
                 gutterSize: 1,
                 onDrag: function (sizes) {
                     /* Scale Spring to fit */
-                    //ScreenSplitter.ScaleToFit($("#split-0"))
+                    ScreenSplitter.ScaleToFit($("#split-0"), null, 0, 0, "hsplit")
                     /* Scale Graph to fit */
-                    ScreenSplitter.ScaleToFit($("#split-1"))
+                    ScreenSplitter.ScaleToFit($("#split-1"), null, 0, 0, "hsplit")
                 },
             })
             $(".gutter").append(horizontalHandle)
@@ -80,14 +80,14 @@ var ScreenSplitter = (function () {
                 gutterSize: 1,
                 onDrag: function (sizes) {
                     /* Scale Spring to fit */
-                    ScreenSplitter.ScaleToFit($("#split-0"))
+                    ScreenSplitter.ScaleToFit($("#split-0"), null, 0, 0, "vsplit")
                     /* Scale Graph to fit */
-                    ScreenSplitter.ScaleToFit($("#split-1"))
+                    ScreenSplitter.ScaleToFit($("#split-1"), null, 0, 0, "vsplit")
                 },
             })
             $(".gutter").append(verticalHandle)
         },
-        ScaleToFit: function ($wrapper,$element, deltaWidth, deltaHeight) {
+        ScaleToFit: function ($wrapper,$element, deltaWidth, deltaHeight, splittype) {
             if($element==null || $element == undefined){
                 $element = $wrapper.find(".content-container")
             }
@@ -115,20 +115,26 @@ var ScreenSplitter = (function () {
                 wrapperSize.width/elmSize.width,
                 wrapperSize.height/elmSize.height
             );
-            $element.css({
+            //debugger;
+            /*$element.css({
                 transform: "scale(" + scale + ")"
-            });
-            /*if (scale < 1) {
+            });*/
+            if (scale < 1) {
+                var transOrigin = "top center"
+                if(splittype == "hsplit"){
+                    transOrigin = "top left"
+                }
                 $element.css({
-                    transform: "scale(" + scale + ")"
+                    "transform": "scale(" + scale + ")",
+                    "transform-origin": transOrigin
                 });
             }
             else{
-                scale = 1;
                 $element.css({
-                    "transform": "scale(" + scale + ")"
+                    "transform": "scale(" + scale + ")",
+                    "transform-origin": "top center"
                 });
-            }*/
+            }
             $element.addClass("split-scaled").attr("scale",scale);
         },
         ResetSplit: function(){
