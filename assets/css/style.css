@@ -656,3 +656,6 @@ svg .cls-101{fill:none;stroke:var(--theme-pri-text-color);stroke-linecap:round;s
 .zoom1, .zoom2{
   transform-origin: left top;
 }
+.zoom2{
+  background-color: #fff;
+}

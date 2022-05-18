@@ -102,7 +102,7 @@ function hammerItScrollableContent(elm, p_maxScale) {
         p_maxScale = 4
 
     hammertime_scroll.on('doubletap panend pinchstart pinch pinchend', function (ev) {
-        if (ev.type == "doubletap") {
+        /*if (ev.type == "doubletap") {
             transform =
                 "translate3d(0,0,0) " +
                 "scale3d(2, 2, 1)";
@@ -119,7 +119,7 @@ function hammerItScrollableContent(elm, p_maxScale) {
             } catch (err) { }
             PZApplyScaleScrollable(el,scale)
             transform = "";
-        }
+        }*/
         if (scale != 1) {
             posX = last_posX + ev.deltaX;
             posY = last_posY + ev.deltaY;

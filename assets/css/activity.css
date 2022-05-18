@@ -907,6 +907,8 @@ input[type="number"] {
 
 .content-container.mc {
   min-width: 340px;
+  width: max-content;
+    margin: 0px auto;
 }
 
 .content-container.instr {
@@ -921,7 +923,7 @@ input[type="number"] {
   position: absolute;
   bottom: 0px;
   border-top: 1px solid var(--theme-popup-border);
-  z-index: 4;
+  z-index: 21;
   outline: 1px solid var(--theme-popup-border);
 }
 .popup_mc .container h2 {

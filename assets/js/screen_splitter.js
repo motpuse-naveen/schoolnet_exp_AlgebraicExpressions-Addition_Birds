@@ -49,9 +49,9 @@ var ScreenSplitter = (function () {
                 }
             }
             //NM: Specific to SpringOscillation.
-            var sprcontht = $(".spingContainer").height();
+            var sprcontht = $(".content-container.mc").height();
             //$(".spingContainer").css({"height":sprcontht + "px"})
-            $(".springCanvas").css({"height":sprcontht + "px"})
+            $(".content-container.mc").css({"height":sprcontht + "px"})
         },
         HorizontalSplit: function () {
             $(".gutter").remove();
@@ -119,20 +119,35 @@ var ScreenSplitter = (function () {
             /*$element.css({
                 transform: "scale(" + scale + ")"
             });*/
+            var setOrigin = false;
+            if((wrapperSize.width/elmSize.width) < (wrapperSize.height/elmSize.height)){
+                console.log(wrapperSize.width-elmSize.width*scale)
+            }
             if (scale < 1) {
                 var transOrigin = "top center"
                 if(splittype == "hsplit"){
-                    transOrigin = "top left"
+                   
+                    transOrigin = "top left";
+                    $element.css({
+                        "transform": "scale(" + scale + ")",
+                        "transform-origin": transOrigin
+                    });
+                    var leftmargin = ($wrapper.width() - ($element.outerWidth() * scale))/2;
+                    $element.css({"margin-left": leftmargin + "px"});
                 }
-                $element.css({
-                    "transform": "scale(" + scale + ")",
-                    "transform-origin": transOrigin
-                });
+                else{
+                    $element.css({
+                        "transform": "scale(" + scale + ")",
+                        "transform-origin": transOrigin,
+                        "margin":"0px auto"
+                    });
+                }
             }
             else{
                 $element.css({
                     "transform": "scale(" + scale + ")",
-                    "transform-origin": "top center"
+                    "transform-origin": "top center",
+                    "margin":"0px auto"
                 });
             }
             $element.addClass("split-scaled").attr("scale",scale);
@@ -140,7 +155,10 @@ var ScreenSplitter = (function () {
         ResetSplit: function(){
             $(".split-scaled").removeAttr("scale").removeAttr("style").removeClass("split-scaled");
             this.InitSplitter();
-            ScreenSplitter.ScaleToFit($("#split-1"))
+            /* Scale Spring to fit */
+            ScreenSplitter.ScaleToFit($("#split-0"));
+            /* Scale Graph to fit */
+            ScreenSplitter.ScaleToFit($("#split-1"));
         }
     }
 })();
