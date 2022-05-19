@@ -25,7 +25,7 @@ var ScreenSplitter = (function () {
     </div>`;
 
     return {
-        InitSplitter: function (whenresize) {
+        InitSplitter: function (p_sizes, whenresize) {
             $("#split-main").removeClass("v-split-main").removeClass("h-split-main");
             $("#split-main").removeAttr("style")
             if(whenresize!=undefined && whenresize!=null && whenresize==true){
@@ -41,11 +41,11 @@ var ScreenSplitter = (function () {
             else{
                 if (window.matchMedia("(orientation: portrait)").matches) {
                     $("#split-main").addClass("v-split-main");
-                    this.VerticalSplit();
+                    this.VerticalSplit(p_sizes);
                 }
                 else {
                     $("#split-main").addClass("h-split-main");
-                    this.HorizontalSplit();
+                    this.HorizontalSplit(p_sizes);
                 }
             }
             //NM: Specific to SpringOscillation.
@@ -53,29 +53,42 @@ var ScreenSplitter = (function () {
             //$(".spingContainer").css({"height":sprcontht + "px"})
             $(".content-container.mc").css({"height":sprcontht + "px"})
         },
-        HorizontalSplit: function () {
+        HorizontalSplit: function (p_sizes) {
+            var loc_sizes = [48, 52]
+            if(p_sizes!=null && p_sizes!=undefined && p_sizes.length>1){
+                loc_sizes = p_sizes;
+            }
             $(".gutter").remove();
             $("#split-0").removeAttr("style");
             $("#split-1").removeAttr("style");
             split_instance = Split(['#split-0', '#split-1'], {
                 minSize: 200,
-                sizes: [48, 52],
+                sizes: loc_sizes,
                 gutterSize: 1,
                 onDrag: function (sizes) {
+                    //debugger;
                     /* Scale Spring to fit */
                     ScreenSplitter.ScaleToFit($("#split-0"), null, 0, 0, "hsplit")
                     /* Scale Graph to fit */
                     ScreenSplitter.ScaleToFit($("#split-1"), null, 0, 0, "hsplit")
                 },
+                onDragEnd: function(sizes){
+                    $("#split-0").attr("size",sizes[0]);
+                    $("#split-1").attr("size",sizes[1])
+                }
             })
             $(".gutter").append(horizontalHandle)
         },
-        VerticalSplit: function () {
+        VerticalSplit: function (p_sizes) {
+            var loc_sizes = [60, 40]
+            if(p_sizes!=null && p_sizes!=undefined && p_sizes.length>1){
+                loc_sizes = p_sizes;
+            }
             $(".gutter").remove();
             $("#split-0").removeAttr("style");
             $("#split-1").removeAttr("style");
             split_instance = Split(['#split-0', '#split-1'], {
-                sizes: [60, 40],
+                sizes: loc_sizes,
                 direction: 'vertical',
                 gutterSize: 1,
                 onDrag: function (sizes) {
@@ -84,6 +97,10 @@ var ScreenSplitter = (function () {
                     /* Scale Graph to fit */
                     ScreenSplitter.ScaleToFit($("#split-1"), null, 0, 0, "vsplit")
                 },
+                onDragEnd: function(sizes){
+                    $("#split-0").attr("size",sizes[0]);
+                    $("#split-1").attr("size",sizes[1])
+                }
             })
             $(".gutter").append(verticalHandle)
         },
@@ -159,6 +176,22 @@ var ScreenSplitter = (function () {
             ScreenSplitter.ScaleToFit($("#split-0"));
             /* Scale Graph to fit */
             ScreenSplitter.ScaleToFit($("#split-1"));
+        },
+        ResetSplitOnPinchZoom: function(){
+            var attr_sizes = []
+            var splitPanel1Size = $("#split-0").attr("size");
+            var splitPanel2Size = $("#split-1").attr("size");
+            if(splitPanel1Size!=undefined && splitPanel1Size !="" && splitPanel2Size !=undefined && splitPanel2Size != ""){
+                attr_sizes = [
+                    Number(splitPanel1Size),
+                    Number(splitPanel2Size)
+                ]
+                //alert(attr_sizes)
+                this.InitSplitter(attr_sizes);
+            }
+            else{
+                this.InitSplitter();
+            }
         }
     }
 })();

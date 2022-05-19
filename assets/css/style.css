@@ -654,6 +654,7 @@ svg .cls-101{fill:none;stroke:var(--theme-pri-text-color);stroke-linecap:round;s
 }
 
 .zoom1, .zoom2{
+  -webkit-transform-origin: left top;
   transform-origin: left top;
 }
 .zoom2{

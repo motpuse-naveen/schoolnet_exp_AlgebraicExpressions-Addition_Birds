@@ -233,7 +233,7 @@ var ActivityShell = (function () {
       var deviceType = this.DeviceType();
       if (deviceType == "desktop") {
         this.AdjustContainerHeight();
-        ScreenSplitter.InitSplitter();
+        ScreenSplitter.InitSplitter(null,true);
         if ($(".popup").is(":visible")) {
           this.AdjustSplitPanelsOnOpenPopup($(".popup:visible"));
         }
