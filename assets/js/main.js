@@ -37,27 +37,53 @@ var ActivityShell = (function () {
     LaunchActivity: function () {
       $(".wrapper").addClass("activity");
       var deviceType = ActivityShell.DeviceType();
-      if (deviceType == "mobile") {
-        //openFullscreen()
-      }
-      $(".container-so.launch").fadeOut();
-      $(".container-so.main").show();
-      this.AdjustContainerHeight();
-      ScreenSplitter.InitSplitter();
-      GuidedTour.Init();
-      EvaluateAlgebraicExpressions.LaunchActivity();
-      /* Scale Spring to fit */
-      ScreenSplitter.ScaleToFit($("#split-0"));
-      /* Scale Graph to fit */
-      ScreenSplitter.ScaleToFit($("#split-1"));
+      var Android = /(android)/i.test(navigator.userAgent);
+      if (deviceType == "mobile" && Android) {
+        openFullscreen()
+        generatePreloader();
+        setTimeout(function () {
+          $(".preloader").remove();
+          $(".container-so.launch").fadeOut();
+          $(".container-so.main").show();
+          ActivityShell.AdjustContainerHeight();
+          ScreenSplitter.InitSplitter();
+          GuidedTour.Init();
+          EvaluateAlgebraicExpressions.LaunchActivity();
+          /* Scale Spring to fit */
+          ScreenSplitter.ScaleToFit($("#split-0"));
+          /* Scale Graph to fit */
+          ScreenSplitter.ScaleToFit($("#split-1"));
 
-      if (zoom1 == null) {
-        hammerItScrollableContent(document.querySelector(".zoom1"));
-        zoom1 = "zoom1";
+          if (zoom1 == null) {
+            hammerItScrollableContent(document.querySelector(".zoom1"));
+            zoom1 = "zoom1";
+          }
+          if (zoom2 == null) {
+            hammerItScrollableContent(document.querySelector(".zoom2"));
+            zoom2 = "zoom2";
+          }
+        }, 1000)
       }
-      if (zoom2 == null) {
-        hammerItScrollableContent(document.querySelector(".zoom2"));
-        zoom2 = "zoom2";
+      else {
+        $(".container-so.launch").fadeOut();
+        $(".container-so.main").show();
+        this.AdjustContainerHeight();
+        ScreenSplitter.InitSplitter();
+        GuidedTour.Init();
+        EvaluateAlgebraicExpressions.LaunchActivity();
+        /* Scale Spring to fit */
+        ScreenSplitter.ScaleToFit($("#split-0"));
+        /* Scale Graph to fit */
+        ScreenSplitter.ScaleToFit($("#split-1"));
+
+        if (zoom1 == null) {
+          hammerItScrollableContent(document.querySelector(".zoom1"));
+          zoom1 = "zoom1";
+        }
+        if (zoom2 == null) {
+          hammerItScrollableContent(document.querySelector(".zoom2"));
+          zoom2 = "zoom2";
+        }
       }
     },
     AdjustContainerHeight: function () {
@@ -232,6 +258,7 @@ var ActivityShell = (function () {
 $(document).ready(function () {
   //This function is moved to preloader complete.
   //ActivityShell.Init();
+
   document.addEventListener('gesturestart', function (e) {
     e.preventDefault();
   });
