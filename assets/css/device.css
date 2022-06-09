@@ -31,6 +31,9 @@
   background-color: #f2f2f2;
 }
 /**/
+.wrapper[device="desktop"] #split-0, .wrapper[device="desktop"] #split-1{
+  float: left;
+}
 
 @media only screen and (min-width: 321px) {
   .container-so.main .exp_header .header h1 .sub-title {
@@ -334,6 +337,16 @@
     .main-src-logo {
     width: 64px;
     margin: 0em 0.5em;
+  }
+}
+@media only screen and (max-width: 750px) {
+  .activity-page-expl-logo {
+    height: 72px;
+    padding: 10px 5px 10px 16px;
+    background: #000;
+  }
+  .container-so.main .exp_header .header .leftpan {
+    min-width: 380px;
   }
 }
 @media screen and (orientation: portrait) and (max-device-width: 610px) {

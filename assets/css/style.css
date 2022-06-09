@@ -88,7 +88,7 @@
 }
 .container-so.main .exp_header .header .leftpan {
   border-right: 1px solid var(--theme-popup-border);
-  min-width: 380px;
+  min-width: 430px;
 }
 .container-so.main .exp_header .header .leftpan .title {
   font-family: "Montserrat-Bold";
