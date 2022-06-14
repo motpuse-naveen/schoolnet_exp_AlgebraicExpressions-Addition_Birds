@@ -47,7 +47,7 @@ var ActivityShell = (function () {
           $(".container-so.main").show();
           ActivityShell.AdjustContainerHeight();
           ScreenSplitter.InitSplitter();
-          GuidedTour.Init();
+          //GuidedTour.Init();
           EvaluateAlgebraicExpressions.LaunchActivity();
           /* Scale Spring to fit */
           ScreenSplitter.ScaleToFit($("#split-0"));
@@ -62,14 +62,22 @@ var ActivityShell = (function () {
             hammerItScrollableContent(document.querySelector(".zoom2"));
             zoom2 = "zoom2";
           }
+          setTimeout(function(){
+            GuidedTour.Init();
+          },500);
         }, 1000)
       }
       else {
         $(".container-so.launch").fadeOut();
         $(".container-so.main").show();
         this.AdjustContainerHeight();
-        ScreenSplitter.InitSplitter();
-        GuidedTour.Init();
+        if(window.screen.width<1024){
+          ScreenSplitter.InitSplitter();
+        }
+        else{
+          ScreenSplitter.InitSplitter(null, true);
+        }
+        //GuidedTour.Init();
         EvaluateAlgebraicExpressions.LaunchActivity();
         /* Scale Spring to fit */
         ScreenSplitter.ScaleToFit($("#split-0"));
@@ -84,6 +92,9 @@ var ActivityShell = (function () {
           hammerItScrollableContent(document.querySelector(".zoom2"));
           zoom2 = "zoom2";
         }
+        setTimeout(function(){
+          GuidedTour.Init();
+        },500);
       }
     },
     AdjustContainerHeight: function () {
@@ -137,6 +148,13 @@ var ActivityShell = (function () {
       }
       else if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)) {
         return "mobile";
+      }
+      else{
+        if (navigator.userAgent.match(/Mac/) && navigator.maxTouchPoints && navigator.maxTouchPoints > 2) {
+          if (window.screen.availWidth < 1024 || window.screen.availHeight < 1024) {
+            return "tablet"
+          }
+        }
       }
       return "desktop";
     },
