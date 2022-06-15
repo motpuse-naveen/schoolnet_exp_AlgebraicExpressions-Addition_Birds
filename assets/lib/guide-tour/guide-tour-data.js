@@ -21,7 +21,7 @@ const g_tour_steps = [
     },
     {
         sourceElmIdQS: "#OK_btn",
-        informationText: `Ok - Evaluate the Algebraic expressions and display feedback`,
+        informationText: `Ok - Evaluate the Algebraic expressions and display feedback.`,
     },
     {
         sourceElmIdQS: "#explain_btn",
